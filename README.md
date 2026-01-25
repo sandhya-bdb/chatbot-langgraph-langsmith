@@ -25,22 +25,30 @@ This repository shows how to build and debug production-style AI agents, includi
 4. Human-in-the-Loop (interrupt & resume)
 
 5. Full LangSmith tracing (LLM calls, tools, HITL, cost, latency)
+   
+### 🧩 Project Evolution (Step-by-Step)
+
+The project was intentionally built incrementally:
+
+- Simple Chatbot
+- Chatbot with Tools
+- Agent-Style Chatbot
+- Chatbot with Memory
+- LangSmith Tracing
+- Human-in-the-Loop (HITL)
+- HITL Traced in LangSmith
+
 
 ### 🛠️ Technologies Used
 
-Python
-
-LangGraph
-
-LangChain
-
-LangSmith
-
-OpenAI (ChatOpenAI)
-
-uv (dependency management)
-
-GitHub Codespaces
+- Python
+- LangGraph
+- LangChain
+- LangSmith
+- OpenAI (ChatOpenAI)
+- uv (dependency management)
+- GitHub Codespaces
+  
 ### 📂 Project Structure
 ```
 ├── basic_chatbot.ipynb
@@ -158,33 +166,22 @@ Note: Local LangSmith tracing may fail due to network or DNS restrictions.
 
 Agentic AI is not just about prompts or logic
 
-Observability is critical
-
-Environment and infrastructure matter as much as code
-
-Human-in-the-Loop workflows require:
-
-Memory
-
-Checkpointing
-
-Careful control flow
-
-LangSmith makes invisible agent behavior visible
-
-GitHub Codespaces can solve real-world debugging blockers
+- Observability is critical
+- Environment and infrastructure matter as much as code
+- Human-in-the-Loop workflows require:
+- Memory
+- Checkpointing
+- Careful control flow
+- LangSmith makes invisible agent behavior visible
+- GitHub Codespaces can solve real-world debugging blockers
 
 ### 🚀 Future Improvements
 
-UI-based Human-in-the-Loop approval
-
-Multi-agent graphs
-
-Persistent long-term memory
-
-Automated evaluations in LangSmith
-
-API deployment
+- UI-based Human-in-the-Loop approval
+- Multi-agent graphs
+- Persistent long-term memory
+- Automated evaluations in LangSmith
+- API deployment
 
 ### 📌 Final Note
 
@@ -193,5 +190,6 @@ It represents a practical, real-world approach to building traceable, controllab
 Debugging environment and network-level issues
 
 Using GitHub Codespaces to overcome local DNS and tracing problems
+
 
 
