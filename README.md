@@ -190,23 +190,16 @@ This enables realistic multi-turn conversations while keeping the repository cle
 
 ### 🚀 Future Improvements
 
-- UI-based Human-in-the-Loop approval
 - Multi-agent graphs
-- Persistent long-term memory
 - Automated evaluations in LangSmith
 - API deployment
 
-### 📌 Final Note
 
-This project was as much about debugging and understanding systems as it was about writing code.
-It represents a practical, real-world approach to building traceable, controllable, and production-ready AI agents.
-Debugging environment and network-level issues
-
-Using GitHub Codespaces to overcome local DNS and tracing problems
 ###  Author
 
 Sandhya Banti Dutta Borah
 Built as a hands-on LangGraph + Agent Systems learning project.
+
 
 
 
