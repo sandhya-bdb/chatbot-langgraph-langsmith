@@ -26,7 +26,7 @@ This repository shows how to design, debug, and scale **production-style AI agen
 - **Human-in-the-Loop (HITL)** execution with interrupt & resume  
 - **LangSmith tracing** for full observability (LLM calls, tools, latency, cost)  
 - **Clean Git + Codespaces workflow**, including environment pinning and reproducibility
-- **Optional Gradio UI for interactive experimentation (used in select notebooks)
+- Optional Gradio UI for interactive experimentation (used in select notebooks)
 
 
 ## 🧩 Project Evolution (Step-by-Step)
@@ -207,6 +207,7 @@ Using GitHub Codespaces to overcome local DNS and tracing problems
 
 Sandhya Banti Dutta Borah
 Built as a hands-on LangGraph + Agent Systems learning project.
+
 
 
 
