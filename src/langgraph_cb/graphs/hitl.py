@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from typing import Annotated
+import re
 from typing_extensions import TypedDict
 
 from langgraph.checkpoint.memory import MemorySaver
@@ -30,17 +31,60 @@ def build_graph():
     )
     llm_with_tools = llm.bind_tools(tools)
 
+    def _parse_buy_intent(text: str) -> tuple[int, str] | None:
+        match = re.search(r"\bbuy\s+(\d+)\s+([a-zA-Z]{1,10})\b", text, re.IGNORECASE)
+        if not match:
+            return None
+        quantity = int(match.group(1))
+        symbol = match.group(2).upper()
+        return quantity, symbol
+
     def chatbot_node(state: State):
+        last = state["messages"][-1]
+        if isinstance(last, HumanMessage):
+            parsed = _parse_buy_intent(last.content)
+            if parsed:
+                quantity, symbol = parsed
+                price = get_stock_price.invoke(symbol)
+                total_price = price * quantity
+                tool_content = prepare_buy.invoke(
+                    {
+                        "symbol": symbol,
+                        "quantity": quantity,
+                        "total_price": total_price,
+                    }
+                )
+                return {
+                    "messages": [
+                        {
+                            "role": "tool",
+                            "content": tool_content,
+                            "tool_call_id": "manual_prepare_buy",
+                        }
+                    ]
+                }
+
         response = llm_with_tools.invoke(state["messages"])
         return {"messages": [response]}
 
+    def _is_tool_message(msg) -> bool:
+        if isinstance(msg, ToolMessage) or getattr(msg, "type", None) == "tool":
+            return True
+        if isinstance(msg, dict):
+            return msg.get("role") == "tool"
+        return False
+
+    def _get_content(msg) -> str:
+        if isinstance(msg, dict):
+            return str(msg.get("content", ""))
+        return str(getattr(msg, "content", ""))
+
     def approval_node(state: State):
         last_message = state["messages"][-1]
+        content = _get_content(last_message)
 
-        if isinstance(last_message, ToolMessage) and last_message.content.startswith(
-            "REQUEST_BUY::"
-        ):
-            _, symbol, quantity, total_price = last_message.content.split("::")
+        if _is_tool_message(last_message) and content.startswith("REQUEST_BUY::"):
+            _, symbol, quantity, total_price = content.split("::")
 
             decision = interrupt(
                 f"Approve buying {quantity} {symbol} stocks for ${float(total_price):.2f}?"
@@ -70,7 +114,16 @@ def build_graph():
     builder.add_node("approval", approval_node)
 
     builder.add_edge(START, "chatbot")
-    builder.add_conditional_edges("chatbot", tools_condition)
+    def route_from_chatbot(state: State):
+        last = state["messages"][-1]
+        content = _get_content(last)
+        if _is_tool_message(last) and content.startswith("REQUEST_BUY::"):
+            return "approval"
+        if isinstance(last, AIMessage) and getattr(last, "tool_calls", None):
+            return "tools"
+        return END
+
+    builder.add_conditional_edges("chatbot", route_from_chatbot)
     builder.add_edge("tools", "approval")
     builder.add_edge("approval", END)
 
