@@ -7,7 +7,7 @@
 ![Build Status](https://img.shields.io/badge/Status-Completed-success)
 
 # AI Chatbot System using LangGraph, LangChain, and OpenAI
-This project is an end-to-end exploration of **agentic AI systems** built using LangGraph and LangChain, with a strong emphasis on **observability, debugging, and real-world execution challenges** rather than just happy-path demos.
+This project is an end-to-end exploration of **agentic AI systems** built using LangGraph and LangChain, with a strong emphasis on **observability, debugging, and real-world execution challenges** rather than just happy-path demos. It now includes a **FastAPI deployment** for the HITL workflow so the agent can be used via a REST API.
 
 The repository progresses step by step—from a simple chatbot to **tool-augmented, memory-enabled, and Human-in-the-Loop (HITL) agents**—while addressing practical issues related to **environment management, tracing, persistence, and infrastructure**.
 
@@ -24,6 +24,7 @@ All experiments were developed and tested locally and in **GitHub Codespaces**, 
 - **LangSmith tracing** for observability (LLM calls, tools, latency, cost)
 - **Clean Git + Codespaces workflow**, including environment pinning and reproducibility
 - **Gradio UI** for interactive experimentation (in notebooks)
+- **FastAPI deployment** for the HITL agent (REST endpoints)
 
 ---
 
@@ -46,6 +47,7 @@ All experiments were developed and tested locally and in **GitHub Codespaces**, 
 - LangChain
 - LangSmith
 - OpenAI (ChatOpenAI)
+- FastAPI (API deployment)
 - SQLite (persistent memory & checkpoints)
 - uv (dependency & Python version management)
 - GitHub Codespaces
