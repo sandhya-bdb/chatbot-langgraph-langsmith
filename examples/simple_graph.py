@@ -1,4 +1,4 @@
-# Auto-generated from simple_graph.ipynb.
+
 
 import sys
 print(sys.executable)
